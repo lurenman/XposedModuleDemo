@@ -1,5 +1,7 @@
 package com.example.xposedmoduledemo;
 
+import android.os.Build;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
@@ -88,6 +90,7 @@ public class HO22K implements IXposedHookLoadPackage {
                     XposedBridge.log("参数1 = " + param.args[0] + " result:" + result);
                 }
             });
+            XposedHelpers.findField(Build.class, "BOARD").set(null, "mini");
         }
     }
 }
