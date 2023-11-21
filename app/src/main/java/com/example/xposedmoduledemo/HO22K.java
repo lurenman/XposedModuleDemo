@@ -1,5 +1,6 @@
 package com.example.xposedmoduledemo;
 
+import android.content.Context;
 import android.os.Build;
 
 import java.lang.reflect.Method;
@@ -77,6 +78,7 @@ public class HO22K implements IXposedHookLoadPackage {
                     param.setResult("hello hook test");
                 }
             });
+            //这个时机比较早所以hook不到
             XposedHelpers.findAndHookMethod("android.os.SystemProperties", loadPackageParam.classLoader, "get", String.class, new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -90,7 +92,20 @@ public class HO22K implements IXposedHookLoadPackage {
                     XposedBridge.log("参数1 = " + param.args[0] + " result:" + result);
                 }
             });
-            XposedHelpers.findField(Build.class, "BOARD").set(null, "mini");
         }
+        //注意Build设置时机
+        XposedHelpers.findAndHookMethod("android.app.Application", loadPackageParam.classLoader, "attach", Context.class, new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                super.beforeHookedMethod(param);
+            }
+
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+//                    Class<?> aClass = Class.forName("android.os.Build", false, loadPackageParam.classLoader);
+                XposedHelpers.findField(Build.class, "BRAND").set(null, "mini");
+                XposedBridge.log("class loader:" + loadPackageParam.classLoader);
+            }
+        });
     }
 }
