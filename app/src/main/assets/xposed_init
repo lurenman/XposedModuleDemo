@@ -1,3 +1,9 @@
-com.example.xposedmoduledemo.HO22K
-com.example.xposedmoduledemo.XBuild
-com.example.xposedmoduledemo.HookDemo
+#com.example.xposedmoduledemo.HO22K
+#com.example.xposedmoduledemo.XBuild
+#com.example.xposedmoduledemo.HookDemo
+#com.example.xposedmoduledemo.MobriskDemo
+#com.example.xposedmoduledemo.MigoDemo
+#com.example.xposedmoduledemo.PaasDemo
+#com.example.xposedmoduledemo.PiaoXingQiu
+
+com.example.xposedmoduledemo.TaiFengHook
